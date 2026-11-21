@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ATELIER & CO. 序構空間設計 | Architecture & Interior Studio</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond, Noto Serif TC, Plus Jakarta Sans, Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&family=Noto+Serif+TC:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Tailwind Configuration -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            alabaster: '#F7F6F2',
+            sand: '#EAE7E0',
+            charcoal: '#1C1B19',
+            taupe: '#8C7A6B',
+            hairline: '#DCD8D0',
+            muted: '#6E6B64'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', '"Noto Serif TC"', 'serif'],
+            sans: ['"Plus Jakarta Sans"', '"Noto Sans TC"', 'sans-serif'],
+          },
+          transitionTimingFunction: {
+            'architectural': 'cubic-bezier(0.22, 1, 0.36, 1)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Subtle Scrollbar & Architectural Refinements */
+    body {
+      background-color: #F7F6F2;
+      color: #1C1B19;
+      font-family: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Slow Hero Zoom Animation */
+    @keyframes slowZoom {
+      0% { transform: scale(1.06); }
+      100% { transform: scale(1.0); }
+    }
+    .animate-hero-zoom {
+      animation: slowZoom 14s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Scroll Reveal Classes */
+    .reveal-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-up.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Subtle Image Hover Zoom */
+    .project-card-img {
+      transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .project-card:hover .project-card-img {
+      transform: scale(1.04);
+    }
+
+    /* Custom Scrollbar for Drawer */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F6F2;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DCD8D0;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8C7A6B;
+    }
+  </style>
+</head>
+<body class="selection:bg-taupe selection:text-alabaster">
+
+  <!-- ==================== 1. MINIMALIST STICKY HEADER ==================== -->
+  <header id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 border-b border-transparent">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 h-20 md:h-24 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#" class="group flex flex-col">
+        <span class="font-serif text-xl md:text-2xl tracking-[0.18em] font-medium text-charcoal">
+          ATELIER &amp; CO.
+        </span>
+        <span class="text-[11px] tracking-[0.28em] text-muted mt-0.5 font-light">
+          序構空間設計
+        </span>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center space-x-10 text-[13px] tracking-[0.12em]">
+        <a href="#projects" class="hover:text-taupe transition-colors py-1">PROJECTS <span class="text-muted text-xs ml-1">作品集</span></a>
+        <a href="#philosophy" class="hover:text-taupe transition-colors py-1">PHILOSOPHY <span class="text-muted text-xs ml-1">設計理念</span></a>
+        <a href="#process" class="hover:text-taupe transition-colors py-1">PROCESS <span class="text-muted text-xs ml-1">服務流程</span></a>
+        <a href="#contact" class="px-5 py-2.5 border border-charcoal text-charcoal hover:bg-charcoal hover:text-alabaster transition-all duration-300 rounded-sm">
+          INQUIRY 預約諮詢
+        </a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" aria-label="開啟選單" class="md:hidden p-2 text-charcoal focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24">
+          <path id="menu-icon-path" stroke-linecap="square" d="M4 8h16M4 16h16" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation Overlay -->
+    <div id="mobile-menu" class="hidden md:hidden bg-alabaster border-b border-hairline px-6 py-8 space-y-6">
+      <div class="flex flex-col space-y-5 text-sm tracking-[0.15em]">
+        <a href="#projects" class="mobile-link py-1 border-b border-hairline/60 flex justify-between">
+          <span>PROJECTS</span><span class="text-muted">精選作品</span>
+        </a>
+        <a href="#philosophy" class="mobile-link py-1 border-b border-hairline/60 flex justify-between">
+          <span>PHILOSOPHY</span><span class="text-muted">設計理念</span>
+        </a>
+        <a href="#process" class="mobile-link py-1 border-b border-hairline/60 flex justify-between">
+          <span>PROCESS</span><span class="text-muted">服務流程</span>
+        </a>
+        <a href="#contact" class="mobile-link py-3 text-center bg-charcoal text-alabaster rounded-sm mt-2">
+          INQUIRY 預約空間諮詢
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 2. ASYMMETRIC ARCHITECTURAL HERO ==================== -->
+  <section class="relative pt-24 md:pt-28 pb-16 md:pb-24 border-b border-hairline">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <!-- Top Editorial Meta -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between pb-8 md:pb-12 gap-6">
+        <div class="max-w-3xl">
+          <p class="text-xs tracking-[0.25em] text-taupe uppercase mb-4">
+            Architecture &amp; Interior Spatial Studio — Est. 2018
+          </p>
+          <h1 class="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-[64px] leading-[1.15] font-normal tracking-tight text-charcoal">
+            Crafting Quiet Spaces Between Light and Material.
+          </h1>
+          <p class="font-serif text-xl sm:text-2xl md:text-3xl text-muted mt-3 font-normal tracking-wide">
+            光影與材質之間的靜謐敘事
+          </p>
+        </div>
+
+        <div class="flex flex-col items-start md:items-end justify-between text-xs tracking-[0.15em] text-muted space-y-2">
+          <span>TAIPEI / TAICHUNG / HSINCHU</span>
+          <a href="#projects" class="inline-flex items-center space-x-3 text-charcoal hover:text-taupe transition-colors pt-2 group">
+            <span>EXPLORE SELECTED WORKS</span>
+            <span class="w-8 h-[1px] bg-charcoal group-hover:w-12 group-hover:bg-taupe transition-all duration-300"></span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Architectural Photograph -->
+      <div class="relative w-full h-[52vh] sm:h-[64vh] md:h-[74vh] overflow-hidden rounded-sm bg-sand">
+        <img 
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85" 
+          onerror="this.src='https://placehold.co/1600x900/EAE7E0/1C1B19?text=ATELIER+%26+CO.+Spatial+Architecture'"
+          alt="極簡建築光影空間設計" 
+          class="w-full h-full object-cover animate-hero-zoom"
+        />
+        <!-- Subtle Bottom Caption Tag -->
+        <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8 bg-alabaster/90 backdrop-blur-sm px-4 py-2.5 rounded-sm border border-hairline/80">
+          <p class="text-[11px] tracking-[0.18em] text-charcoal uppercase">
+            Featured — Villa Serenity, Taichung (2025)
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 3. SELECTED WORKS (PORTFOLIO GRID + FILTER) ==================== -->
+  <section id="projects" class="py-20 md:py-32 border-b border-hairline">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      
+      <!-- Section Header & Filter Tabs -->
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-14 md:mb-20 gap-8 reveal-up">
+        <div>
+          <span class="text-xs tracking-[0.25em] text-taupe uppercase block mb-3">01 / Selected Works</span>
+          <h2 class="font-serif text-3xl md:text-5xl font-normal tracking-tight">
+            精選空間作品
+          </h2>
+        </div>
+
+        <!-- Category Filter Buttons -->
+        <div id="filter-tabs" class="flex flex-wrap gap-2 sm:gap-3" role="tablist" aria-label="作品分類篩選">
+          <button data-filter="all" class="filter-btn active px-4 py-2 text-xs tracking-[0.15em] border border-charcoal bg-charcoal text-alabaster transition-all rounded-sm">
+            ALL 全部 <span class="opacity-70 ml-1">(06)</span>
+          </button>
+          <button data-filter="residential" class="filter-btn px-4 py-2 text-xs tracking-[0.15em] border border-hairline text-charcoal hover:border-charcoal transition-all rounded-sm">
+            RESIDENTIAL 住宅空間
+          </button>
+          <button data-filter="commercial" class="filter-btn px-4 py-2 text-xs tracking-[0.15em] border border-hairline text-charcoal hover:border-charcoal transition-all rounded-sm">
+            COMMERCIAL 商業空間
+          </button>
+          <button data-filter="architecture" class="filter-btn px-4 py-2 text-xs tracking-[0.15em] border border-hairline text-charcoal hover:border-charcoal transition-all rounded-sm">
+            ARCHITECTURE 建築規劃
+          </button>
+        </div>
+      </div>
+
+      <!-- Asymmetric Editorial Portfolio Grid -->
+      <div id="portfolio-grid" class="grid grid-cols-1 md:grid-cols-12 gap-y-16 md:gap-x-10 md:gap-y-24">
+        <!-- Rendered dynamically via JavaScript for clean state & modal binding -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 4. STUDIO PHILOSOPHY & MATERIALITY ==================== -->
+  <section id="philosophy" class="py-20 md:py-32 bg-sand/50 border-b border-hairline">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        
+        <!-- Left Sticky Editorial Statement -->
+        <div class="lg:col-span-5 lg:sticky lg:top-32 reveal-up">
+          <span class="text-xs tracking-[0.25em] text-taupe uppercase block mb-3">02 / Philosophy</span>
+          <h2 class="font-serif text-3xl md:text-5xl leading-[1.2] font-normal mb-6">
+            減去多餘的裝飾，<br/>讓建築回歸本質。
+          </h2>
+          <p class="text-muted text-sm md:text-base leading-relaxed font-light mb-8">
+            我們相信好的空間不需要喧嘩。透過精準的尺度比例、對自然光線軌跡的捕捉，以及天然石材、實木與礦物塗料的真實肌理，為居住者留出呼吸與沉澱的餘白。
+          </p>
+          <div class="aspect-[4/3] w-full overflow-hidden rounded-sm bg-sand">
+            <img 
+              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=80" 
+              onerror="this.src='https://placehold.co/800x600/EAE7E0/1C1B19?text=Material+Study'"
+              alt="天然材質與光影研究" 
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        <!-- Right 3 Core Principles -->
+        <div class="lg:col-span-7 divide-y divide-hairline border-t border-b border-hairline">
+          <!-- Principle 01 -->
+          <div class="py-10 md:py-12 group reveal-up">
+            <div class="flex items-baseline justify-between mb-4">
+              <span class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-taupe transition-colors">
+                I. Proportion &amp; Order <span class="text-lg md:text-xl font-normal ml-2">尺度與秩序</span>
+              </span>
+              <span class="text-xs tracking-[0.2em] text-muted">01</span>
+            </div>
+            <p class="text-muted text-sm md:text-[15px] leading-relaxed font-light max-w-2xl">
+              從建築結構的軸線出發，重新梳理動線與生活機能的關係。以克制的幾何分割與隱藏式收納系統，消除視覺雜訊，建立和諧而穩定的場域秩序。
+            </p>
+          </div>
+
+          <!-- Principle 02 -->
+          <div class="py-10 md:py-12 group reveal-up">
+            <div class="flex items-baseline justify-between mb-4">
+              <span class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-taupe transition-colors">
+                II. Natural Light &amp; Shadow <span class="text-lg md:text-xl font-normal ml-2">自然採光與時間感</span>
+              </span>
+              <span class="text-xs tracking-[0.2em] text-muted">02</span>
+            </div>
+            <p class="text-muted text-sm md:text-[15px] leading-relaxed font-light max-w-2xl">
+              光線是空間中最具生命力的媒材。我們透過格柵、天井與深窗台設計過濾直射強光，讓晨昏與四季的光影變化在牆面上留下詩意的時間刻度。
+            </p>
+          </div>
+
+          <!-- Principle 03 -->
+          <div class="py-10 md:py-12 group reveal-up">
+            <div class="flex items-baseline justify-between mb-4">
+              <span class="font-serif text-2xl md:text-3xl text-charcoal group-hover:text-taupe transition-colors">
+                III. Raw Tactility &amp; Patina <span class="text-lg md:text-xl font-normal ml-2">原始肌理與歲月痕跡</span>
+              </span>
+              <span class="text-xs tracking-[0.2em] text-muted">03</span>
+            </div>
+            <p class="text-muted text-sm md:text-[15px] leading-relaxed font-light max-w-2xl">
+              嚴選萊姆石、手工司曼特灰泥、未經過度修飾的橡木與黃銅。尊重材料本身的自然紋理與觸感，使其隨著日常使用愈發溫潤耐看。
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 5. SERVICES & PROCESS (互動式設計流程) ==================== -->
+  <section id="process" class="py-20 md:py-32 border-b border-hairline">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 md:mb-20 reveal-up">
+        <div>
+          <span class="text-xs tracking-[0.25em] text-taupe uppercase block mb-3">03 / Services &amp; Process</span>
+          <h2 class="font-serif text-3xl md:text-5xl font-normal">
+            設計服務流程
+          </h2>
+        </div>
+        <p class="text-muted text-sm font-light max-w-md mt-4 md:mt-0">
+          從前期基地評估、建築與室內整合設計，到精準的工程監造與軟裝配置，提供完整的一站式空間實踐。點擊階段可展開詳細說明。
+        </p>
+      </div>
+
+      <!-- 4-Step Interactive Process Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-hairline">
+        
+        <!-- Step 01 -->
+        <div class="process-card border-r border-b border-hairline p-8 md:p-10 hover:bg-sand/40 transition-colors cursor-pointer reveal-up" onclick="toggleProcessDetail(this)">
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-serif text-3xl text-taupe">01</span>
+            <span class="text-xs tracking-[0.15em] text-muted uppercase">Consultation</span>
+          </div>
+          <h3 class="font-serif text-xl md:text-2xl mb-3">空間諮詢與基地勘查</h3>
+          <p class="text-muted text-sm font-light leading-relaxed mb-6">
+            深入了解居住習慣、品牌定位與預算規劃，並進行現場結構、採光與管線精密丈量。
+          </p>
+          <div class="process-extra hidden pt-4 border-t border-hairline text-xs text-charcoal/80 space-y-2 leading-relaxed">
+            <p>• 需求訪談與生活型態分析</p>
+            <p>• 建築現況勘驗與原始圖面核對</p>
+            <p>• 初步預算分配與時程建議</p>
+          </div>
+          <div class="mt-4 text-[11px] tracking-[0.15em] text-taupe flex items-center gap-1">
+            <span class="toggle-label">+ DETAILS</span>
+          </div>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="process-card border-r border-b border-hairline p-8 md:p-10 hover:bg-sand/40 transition-colors cursor-pointer reveal-up" onclick="toggleProcessDetail(this)">
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-serif text-3xl text-taupe">02</span>
+            <span class="text-xs tracking-[0.15em] text-muted uppercase">Concept &amp; Layout</span>
+          </div>
+          <h3 class="font-serif text-xl md:text-2xl mb-3">概念提案與平面配置</h3>
+          <p class="text-muted text-sm font-light leading-relaxed mb-6">
+            建立空間核心敘事，提出最佳化動線格局、3D 光影量體模擬與初步材質情緒板。
+          </p>
+          <div class="process-extra hidden pt-4 border-t border-hairline text-xs text-charcoal/80 space-y-2 leading-relaxed">
+            <p>• 平面機能配置與動線優化</p>
+            <p>• 空間氛圍與核心材質板 (Moodboard)</p>
+            <p>• 3D 空間尺度與自然光影模擬</p>
+          </div>
+          <div class="mt-4 text-[11px] tracking-[0.15em] text-taupe flex items-center gap-1">
+            <span class="toggle-label">+ DETAILS</span>
+          </div>
+        </div>
+
+        <!-- Step 03 -->
+        <div class="process-card border-r border-b border-hairline p-8 md:p-10 hover:bg-sand/40 transition-colors cursor-pointer reveal-up" onclick="toggleProcessDetail(this)">
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-serif text-3xl text-taupe">03</span>
+            <span class="text-xs tracking-[0.15em] text-muted uppercase">Detail Drawing</span>
+          </div>
+          <h3 class="font-serif text-xl md:text-2xl mb-3">施工圖說與材質定案</h3>
+          <p class="text-muted text-sm font-light leading-relaxed mb-6">
+            繪製全套精密建築與室內施工大樣圖，確認每一處收邊細節、燈光迴路與工程報價。
+          </p>
+          <div class="process-extra hidden pt-4 border-t border-hairline text-xs text-charcoal/80 space-y-2 leading-relaxed">
+            <p>• 立面剖面大樣與收邊節點圖</p>
+            <p>• 機電、空調、照明系統整合圖</p>
+            <p>• 透明化分項工程預算書確認</p>
+          </div>
+          <div class="mt-4 text-[11px] tracking-[0.15em] text-taupe flex items-center gap-1">
+            <span class="toggle-label">+ DETAILS</span>
+          </div>
+        </div>
+
+        <!-- Step 04 -->
+        <div class="process-card border-r border-b border-hairline p-8 md:p-10 hover:bg-sand/40 transition-colors cursor-pointer reveal-up" onclick="toggleProcessDetail(this)">
+          <div class="flex items-center justify-between mb-8">
+            <span class="font-serif text-3xl text-taupe">04</span>
+            <span class="text-xs tracking-[0.15em] text-muted uppercase">Execution &amp; Styling</span>
+          </div>
+          <h3 class="font-serif text-xl md:text-2xl mb-3">工程監造與軟裝陳設</h3>
+          <p class="text-muted text-sm font-light leading-relaxed mb-6">
+            嚴格把關現場施工品質與工期進度，並協助挑選家具、藝術品與織品完成最終空間演繹。
+          </p>
+          <div class="process-extra hidden pt-4 border-t border-hairline text-xs text-charcoal/80 space-y-2 leading-relaxed">
+            <p>• 定期工地現場監造與進度回報</p>
+            <p>• 訂製家具、燈具與藝術品選配</p>
+            <p>• 完工驗收與一年期售後保固服務</p>
+          </div>
+          <div class="mt-4 text-[11px] tracking-[0.15em] text-taupe flex items-center gap-1">
+            <span class="toggle-label">+ DETAILS</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 6. INQUIRY FORM & STUDIO CONTACT ==================== -->
+  <section id="contact" class="py-20 md:py-32 bg-sand/30">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20">
+        
+        <!-- Left Studio Info -->
+        <div class="lg:col-span-5 reveal-up">
+          <span class="text-xs tracking-[0.25em] text-taupe uppercase block mb-3">04 / Contact &amp; Inquiry</span>
+          <h2 class="font-serif text-3xl md:text-5xl font-normal mb-6">
+            開啟您的空間對話
+          </h2>
+          <p class="text-muted text-sm md:text-base font-light leading-relaxed mb-10">
+            無論是私人住宅、自地自建建築規劃，或是品牌商業空間，歡迎留下您的專案資訊，我們的設計總監將於兩個工作日內與您聯繫。
+          </p>
+
+          <div class="space-y-6 border-t border-hairline pt-8 text-sm">
+            <div>
+              <span class="text-[11px] tracking-[0.2em] text-muted uppercase block mb-1">Studio Address</span>
+              <p class="text-charcoal">台北市大安區仁愛路四段 112 巷 18 號 2 樓</p>
+              <p class="text-muted text-xs mt-0.5">2F., No. 18, Ln. 112, Sec. 4, Ren'ai Rd., Da'an Dist., Taipei</p>
+            </div>
+            <div>
+              <span class="text-[11px] tracking-[0.2em] text-muted uppercase block mb-1">Direct Contact</span>
+              <p class="text-charcoal">hello@atelier-co.design</p>
+              <p class="text-charcoal mt-0.5">+886 (02) 2708-9412</p>
+            </div>
+            <div>
+              <span class="text-[11px] tracking-[0.2em] text-muted uppercase block mb-1">Office Hours</span>
+              <p class="text-muted">Mon – Fri / 09:30 – 18:30 (採預約制諮詢)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Interactive Inquiry Form -->
+        <div class="lg:col-span-7 reveal-up">
+          <form id="inquiry-form" class="bg-alabaster p-8 md:p-12 border border-hairline rounded-sm space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="client-name" class="block text-xs tracking-[0.15em] text-muted uppercase mb-2">Name 姓名 *</label>
+                <input type="text" id="client-name" required placeholder="請輸入您的稱呼" 
+                  class="w-full bg-transparent border-b border-hairline py-2.5 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors" />
+              </div>
+              <div>
+                <label for="client-contact" class="block text-xs tracking-[0.15em] text-muted uppercase mb-2">Phone / Email 聯絡方式 *</label>
+                <input type="text" id="client-contact" required placeholder="電話或電子信箱" 
+                  class="w-full bg-transparent border-b border-hairline py-2.5 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div>
+                <label for="project-type" class="block text-xs tracking-[0.15em] text-muted uppercase mb-2">Project Type 空間類型</label>
+                <select id="project-type" 
+                  class="w-full bg-transparent border-b border-hairline py-2.5 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors">
+                  <option value="Residential 私人住宅 / 新成屋">Residential 私人住宅 / 新成屋</option>
+                  <option value="Renovation 老屋翻新改造">Renovation 老屋翻新改造</option>
+                  <option value="Commercial 商業空間 / 品牌展廳">Commercial 商業空間 / 品牌展廳</option>
+                  <option value="Architecture 建築規劃 / 自地自建">Architecture 建築規劃 / 自地自建</option>
+                </select>
+              </div>
+              <div>
+                <label for="project-area" class="block text-xs tracking-[0.15em] text-muted uppercase mb-2">Area &amp; Location 坪數與地點</label>
+                <input type="text" id="project-area" placeholder="例如：竹北 / 室內約 45 坪" 
+                  class="w-full bg-transparent border-b border-hairline py-2.5 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors" />
+              </div>
+            </div>
+
+            <div>
+              <label for="project-message" class="block text-xs tracking-[0.15em] text-muted uppercase mb-2">Message 需求與期望時程</label>
+              <textarea id="project-message" rows="3" placeholder="請簡述您的空間需求、預計動工時間或預算範圍..." 
+                class="w-full bg-transparent border-b border-hairline py-2.5 text-sm text-charcoal focus:outline-none focus:border-charcoal transition-colors resize-none"></textarea>
+            </div>
+
+            <div class="pt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <span class="text-xs text-muted font-light">* 提交後我們將嚴格保密您的個人與專案資料</span>
+              <button type="submit" class="px-8 py-3.5 bg-charcoal text-alabaster text-xs tracking-[0.2em] uppercase hover:bg-taupe transition-colors duration-300 rounded-sm">
+                SEND INQUIRY 送出預約
+              </button>
+            </div>
+
+            <!-- Inline Confirmation Message Box (Replaces alert) -->
+            <div id="form-feedback" class="hidden p-4 bg-sand border border-taupe/40 text-charcoal text-sm rounded-sm">
+              <p class="font-medium">感謝您的預約諮詢。</p>
+              <p class="text-muted text-xs mt-1">我們已收到您的專案資訊，設計顧問將於 48 小時內與您聯繫安排初談。</p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== 7. MINIMALIST FOOTER ==================== -->
+  <footer class="py-12 border-t border-hairline bg-alabaster text-xs text-muted">
+    <div class="max-w-[1440px] mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-4">
+        <span class="font-serif text-base tracking-[0.15em] text-charcoal">ATELIER &amp; CO.</span>
+        <span>© 2026 序構空間設計有限公司. All Rights Reserved.</span>
+      </div>
+      <div class="flex items-center space-x-8 tracking-[0.15em]">
+        <a href="https://instagram.com" target="_blank" rel="noreferrer" class="hover:text-charcoal transition-colors">INSTAGRAM</a>
+        <a href="https://pinterest.com" target="_blank" rel="noreferrer" class="hover:text-charcoal transition-colors">PINTEREST</a>
+        <a href="#" class="hover:text-charcoal transition-colors">BACK TO TOP ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 8. CASE STUDY LIGHTBOX DRAWER / MODAL ==================== -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+    <!-- Backdrop -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-charcoal/60 backdrop-blur-xs transition-opacity"></div>
+    
+    <!-- Modal Container -->
+    <div class="fixed inset-y-0 right-0 w-full max-w-4xl bg-alabaster shadow-2xl overflow-y-auto border-l border-hairline flex flex-col justify-between">
+      <div>
+        <!-- Sticky Modal Top Bar -->
+        <div class="sticky top-0 z-10 bg-alabaster/95 backdrop-blur-sm px-6 md:px-10 py-5 border-b border-hairline flex items-center justify-between">
+          <span id="modal-category" class="text-xs tracking-[0.2em] text-taupe uppercase">RESIDENTIAL</span>
+          <button id="close-modal-btn" class="inline-flex items-center space-x-2 text-xs tracking-[0.18em] text-charcoal hover:text-taupe py-1 px-2">
+            <span>CLOSE 關閉</span>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+              <path stroke-linecap="square" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6 md:p-10 space-y-8">
+          <div>
+            <h2 id="modal-title" class="font-serif text-3xl md:text-4xl text-charcoal font-normal">Project Title</h2>
+            <p id="modal-subtitle" class="text-muted text-sm md:text-base mt-1 font-light">Subtitle</p>
+          </div>
+
+          <!-- Active Gallery Image -->
+          <div class="aspect-[16/10] w-full overflow-hidden rounded-sm bg-sand">
+            <img id="modal-main-img" src="" alt="專案實景照片" class="w-full h-full object-cover transition-opacity duration-300" />
+          </div>
+
+          <!-- Thumbnail Switcher -->
+          <div id="modal-thumbnails" class="grid grid-cols-3 gap-4">
+            <!-- Populated dynamically -->
+          </div>
+
+          <!-- Architectural Specs Grid -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-t border-b border-hairline text-xs">
+            <div>
+              <span class="text-muted tracking-[0.15em] uppercase block mb-1">Location 地點</span>
+              <span id="modal-location" class="text-charcoal font-medium text-sm">—</span>
+            </div>
+            <div>
+              <span class="text-muted tracking-[0.15em] uppercase block mb-1">Area 面積</span>
+              <span id="modal-area" class="text-charcoal font-medium text-sm">—</span>
+            </div>
+            <div>
+              <span class="text-muted tracking-[0.15em] uppercase block mb-1">Year 年份</span>
+              <span id="modal-year" class="text-charcoal font-medium text-sm">—</span>
+            </div>
+            <div>
+              <span class="text-muted tracking-[0.15em] uppercase block mb-1">Materials 主要材質</span>
+              <span id="modal-materials" class="text-charcoal font-medium text-sm">—</span>
+            </div>
+          </div>
+
+          <!-- Concept Description -->
+          <div class="space-y-4">
+            <h4 class="text-xs tracking-[0.2em] text-taupe uppercase">Design Narrative 設計概念</h4>
+            <p id="modal-description" class="text-charcoal/90 text-sm md:text-base leading-relaxed font-light">
+              Description goes here.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer CTA -->
+      <div class="px-6 md:px-10 py-6 bg-sand/50 border-t border-hairline flex items-center justify-between">
+        <span class="text-xs text-muted">喜歡此案例的空間氛圍？</span>
+        <a href="#contact" onclick="closeProjectModal()" class="px-5 py-2.5 bg-charcoal text-alabaster text-xs tracking-[0.15em] rounded-sm hover:bg-taupe transition-colors">
+          INQUIRE SIMILAR PROJECT 預約諮詢
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT INTERACTIVITY ==================== -->
+  <script>
+    // 1. Curated Architectural Projects Data
+    const projectsData = [
+      {
+        id: 'villa-serenity',
+        title: 'Villa Serenity 靜默之邸',
+        subtitle: '光影與萊姆石構築的現代三代宅邸',
+        category: 'residential',
+        categoryLabel: 'RESIDENTIAL 住宅空間',
+        location: 'Taichung 台中七期',
+        area: '82 坪 (271 m²)',
+        year: '2025',
+        materials: '萊姆石、白橡木、司曼特灰泥',
+        spanClass: 'md:col-span-7',
+        aspectClass: 'aspect-[4/3]',
+        description: '本案位於台中重劃區，屋主期盼在繁忙都市中擁有一處如美術館般沉靜的居所。我們打破傳統客餐廳的封閉隔間，以一道長達九米的萊姆石主牆串聯起居室與茶室，並利用大面落地窗引入南向柔和自然光，讓家具與建築量體在光影推移中展現純粹的靜謐感。',
+        images: [
+          'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1400&q=85'
+        ]
+      },
+      {
+        id: 'kissa-monolith',
+        title: 'Monolith Tea & Gallery 岩茶藝廊',
+        subtitle: '當代茶道體驗與器物選品複合空間',
+        category: 'commercial',
+        categoryLabel: 'COMMERCIAL 商業空間',
+        location: 'Taipei 台北大安',
+        area: '38 坪 (125 m²)',
+        year: '2025',
+        materials: '鑿面花崗岩、煙燻胡桃木、手工和紙',
+        spanClass: 'md:col-span-5 md:mt-16',
+        aspectClass: 'aspect-[3/4]',
+        description: '將台灣傳統茶文化轉譯為極簡當代語彙。空間中央設置一座重達兩噸的整塊鑿面花崗岩茶席，周圍留出寬敞的迴游動線。透過低照度重點照明與和紙透光隔屏，引導訪客放慢步調，專注於茶湯香氣與陶藝器物的細節之美。',
+        images: [
+          'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1400&q=85'
+        ]
+      },
+      {
+        id: 'courtyard-house',
+        title: 'House of Courtyard 埕光之屋',
+        subtitle: '引入風與綠意的自地自建清水模建築',
+        category: 'architecture',
+        categoryLabel: 'ARCHITECTURE 建築規劃',
+        location: 'Hsinchu 新竹竹北',
+        area: '115 坪 (380 m²)',
+        year: '2024',
+        materials: '清水混凝土、紅銅格柵、水磨石',
+        spanClass: 'md:col-span-5',
+        aspectClass: 'aspect-[4/5]',
+        description: '針對新竹特有的強勁季風與日照條件，我們在建築量體中央內縮出一座雙層挑高內庭院（Courtyard）。外部以溫潤的木紋清水模與可調節式格柵抵禦風沙與西曬，內部所有起居空間皆面向中庭展開，實現「閉合於外、開闊於內」的私密生活場域。',
+        images: [
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85'
+        ]
+      },
+      {
+        id: 'nordic-loft',
+        title: 'Hygge Residence 溫潤之寓',
+        subtitle: '北歐機能主義與日式侘寂的雙人居所',
+        category: 'residential',
+        categoryLabel: 'RESIDENTIAL 住宅空間',
+        location: 'Taipei 台北天母',
+        area: '46 坪 (152 m²)',
+        year: '2024',
+        materials: '丹麥梣木、亞麻織品、礦物塗料',
+        spanClass: 'md:col-span-7 md:mt-12',
+        aspectClass: 'aspect-[16/10]',
+        description: '拆除原本零碎的三房格局，重新定義為開放式雙人生活舞台。全室採用一致的暖砂色礦物塗料與實木地板無縫銜接，中島餐桌結合書房機能，讓閱讀、烹飪與社交自然融合於同一片和煦陽光之下。',
+        images: [
+          'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1615529328331-f8917597711f?auto=format&fit=crop&w=1400&q=85'
+        ]
+      },
+      {
+        id: 'aesop-atelier',
+        title: 'Botanica Flagship 植萃香氛概念店',
+        subtitle: '以再生陶土與黃銅演繹的永續零售空間',
+        category: 'commercial',
+        categoryLabel: 'COMMERCIAL 商業空間',
+        location: 'Taichung 台中勤美',
+        area: '32 坪 (105 m²)',
+        year: '2024',
+        materials: '再生紅陶磚、霧面黃銅、火山岩',
+        spanClass: 'md:col-span-6',
+        aspectClass: 'aspect-[4/3]',
+        description: '結合在地工藝窯燒陶磚與極簡金屬層架，打造充滿觸覺記憶的品牌體驗店。水槽區採用整塊火山岩手工雕鑿而成，讓顧客在試用產品時能感受自然材質的溫度與時間沉澱。',
+        images: [
+          'https://images.unsplash.com/photo-1604014237800-1c9102c219da?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1400&q=85'
+        ]
+      },
+      {
+        id: 'mountain-pavilion',
+        title: 'Mist Pavilion 山嵐招待所',
+        subtitle: '隱身於苗栗山林間的斜屋頂木構建築',
+        category: 'architecture',
+        categoryLabel: 'ARCHITECTURE 建築規劃',
+        location: 'Miaoli 苗栗三義',
+        area: '95 坪 (314 m²)',
+        year: '2023',
+        materials: '台灣柳杉集成材、黑板岩、低反射玻璃',
+        spanClass: 'md:col-span-6 md:mt-14',
+        aspectClass: 'aspect-[4/3]',
+        description: '順應山坡地形起伏，以輕盈的深出簷斜屋頂回應多雨的山區氣候。大跨距木桁架結構創造無柱的開闊視野，使室內空間彷彿漂浮於雲霧與樹梢之間，達成建築與自然地景的謙遜共生。',
+        images: [
+          'https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85',
+          'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=85'
+        ]
+      }
+    ];
+
+    // 2. Render Portfolio Grid
+    const portfolioGrid = document.getElementById('portfolio-grid');
+
+    function renderProjects(filter = 'all') {
+      portfolioGrid.innerHTML = '';
+      const filtered = filter === 'all' 
+        ? projectsData 
+        : projectsData.filter(p => p.category === filter);
+
+      filtered.forEach((project, idx) => {
+        // When filtered to a subset, adjust layout cleanly
+        const spanClasses = filter === 'all' ? project.spanClass : 'md:col-span-6';
+        const article = document.createElement('article');
+        article.className = `project-card group cursor-pointer ${spanClasses}`;
+        article.onclick = () => openProjectModal(project.id);
+
+        article.innerHTML = `
+          <div class="overflow-hidden rounded-sm bg-sand ${project.aspectClass} mb-5 relative">
+            <img 
+              src="${project.images[0]}" 
+              onerror="this.src='https://placehold.co/900x700/EAE7E0/1C1B19?text=${encodeURIComponent(project.title)}'"
+              alt="${project.title}" 
+              loading="lazy"
+              class="project-card-img w-full h-full object-cover"
+            />
+            <div class="absolute top-4 right-4 bg-alabaster/90 backdrop-blur-xs px-3 py-1 rounded-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span class="text-[11px] tracking-[0.15em] text-charcoal">VIEW CASE +</span>
+            </div>
+          </div>
+          <div class="flex items-baseline justify-between border-b border-hairline pb-3">
+            <div>
+              <span class="text-[11px] tracking-[0.2em] text-taupe uppercase block mb-1">${project.categoryLabel}</span>
+              <h3 class="font-serif text-2xl md:text-[26px] text-charcoal group-hover:text-taupe transition-colors">${project.title}</h3>
+            </div>
+            <div class="text-right text-xs text-muted tracking-wider">
+              <span class="block">${project.location}</span>
+              <span class="block mt-0.5">${project.year} / ${project.area.split(' ')[0]}坪</span>
+            </div>
+          </div>
+        `;
+        portfolioGrid.appendChild(article);
+      });
+    }
+
+    // Initial render
+    renderProjects('all');
+
+    // 3. Category Filter Logic
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-charcoal', 'text-alabaster', 'border-charcoal');
+          b.classList.add('border-hairline', 'text-charcoal');
+        });
+        btn.classList.remove('border-hairline');
+        btn.classList.add('bg-charcoal', 'text-alabaster', 'border-charcoal');
+        renderProjects(btn.dataset.filter);
+      });
+    });
+
+    // 4. Case Study Modal Logic
+    const modal = document.getElementById('project-modal');
+    const modalBackdrop = document.getElementById('modal-backdrop');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+
+    function openProjectModal(projectId) {
+      const project = projectsData.find(p => p.id === projectId);
+      if (!project) return;
+
+      document.getElementById('modal-category').textContent = project.categoryLabel;
+      document.getElementById('modal-title').textContent = project.title;
+      document.getElementById('modal-subtitle').textContent = project.subtitle;
+      document.getElementById('modal-location').textContent = project.location;
+      document.getElementById('modal-area').textContent = project.area;
+      document.getElementById('modal-year').textContent = project.year;
+      document.getElementById('modal-materials').textContent = project.materials;
+      document.getElementById('modal-description').textContent = project.description;
+
+      const mainImg = document.getElementById('modal-main-img');
+      mainImg.src = project.images[0];
+
+      const thumbContainer = document.getElementById('modal-thumbnails');
+      thumbContainer.innerHTML = '';
+      project.images.forEach((imgUrl, index) => {
+        const thumbBtn = document.createElement('button');
+        thumbBtn.type = 'button';
+        thumbBtn.className = `aspect-[16/10] overflow-hidden rounded-sm border-2 transition-all ${index === 0 ? 'border-charcoal opacity-100' : 'border-transparent opacity-60 hover:opacity-100'}`;
+        thumbBtn.innerHTML = `<img src="${imgUrl}" alt="縮圖 ${index + 1}" class="w-full h-full object-cover" />`;
+        thumbBtn.onclick = () => {
+          mainImg.src = imgUrl;
+          Array.from(thumbContainer.children).forEach(c => {
+            c.classList.remove('border-charcoal', 'opacity-100');
+            c.classList.add('border-transparent', 'opacity-60');
+          });
+          thumbBtn.classList.remove('border-transparent', 'opacity-60');
+          thumbBtn.classList.add('border-charcoal', 'opacity-100');
+        };
+        thumbContainer.appendChild(thumbBtn);
+      });
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    closeModalBtn.addEventListener('click', closeProjectModal);
+    modalBackdrop.addEventListener('click', closeProjectModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeProjectModal();
+      }
+    });
+
+    // 5. Interactive Process Accordion Toggle
+    function toggleProcessDetail(card) {
+      const extra = card.querySelector('.process-extra');
+      const label = card.querySelector('.toggle-label');
+      const isHidden = extra.classList.contains('hidden');
+      if (isHidden) {
+        extra.classList.remove('hidden');
+        label.textContent = '− LESS';
+      } else {
+        extra.classList.add('hidden');
+        label.textContent = '+ DETAILS';
+      }
+    }
+
+    // 6. Sticky Header Backdrop on Scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('bg-alabaster/90', 'backdrop-blur-md', 'border-hairline');
+        navbar.classList.remove('border-transparent');
+      } else {
+        navbar.classList.remove('bg-alabaster/90', 'backdrop-blur-md', 'border-hairline');
+        navbar.classList.add('border-transparent');
+      }
+    });
+
+    // 7. Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+
+    // 8. Inquiry Form Submission Handling
+    const inquiryForm = document.getElementById('inquiry-form');
+    const formFeedback = document.getElementById('form-feedback');
+
+    inquiryForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      formFeedback.classList.remove('hidden');
+      inquiryForm.reset();
+      setTimeout(() => {
+        formFeedback.classList.add('hidden');
+      }, 8000);
+    });
+
+    // 9. IntersectionObserver for Subtle Scroll Reveal
+    const observerOptions = {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    };
+
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-up').forEach(el => {
+      revealObserver.observe(el);
+    });
+  </script>
+</body>
+</html>
